@@ -6,14 +6,28 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
-
+    @IBOutlet weak var countLabel: UILabel!
+        @IBOutlet weak var favButton: UIButton!
+        
+        private var countNum = 0
+        
+        private let disposeBag = DisposeBag()
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            favButton.rx.tap
+                .subscribe(onNext: {[unowned self] _ in
+                    self.countNum += 1
+                    self.countLabel.text = String(self.countNum)
+                })
+            .disposed(by: disposeBag)
+        }
 
 }
 
